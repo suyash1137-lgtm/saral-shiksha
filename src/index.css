@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global accessibility overrides */
+.large-text {
+  font-size: 1.125rem;
+}
+
+.high-contrast {
+  filter: contrast(1.5);
+}
+
+.reduced-motion * {
+  animation-duration: 0.001ms !important;
+  transition-duration: 0.001ms !important;
+}
