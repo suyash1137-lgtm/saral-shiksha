@@ -228,12 +228,22 @@ const lessons = [
   },
 ]
 
+const lessonAliases = {
+  'python-variables': 'lesson-002',
+  'variables': 'lesson-002',
+  'python-intro': 'lesson-001',
+  'loops': 'lesson-003',
+  'html': 'lesson-005',
+}
+
 /**
- * Get a lesson by ID. Falls back to lesson-002 (the demo lesson)
- * if the ID is not found, so navigating from Dashboard always works.
+ * Get a lesson by ID or alias.
+ * Returns undefined if the lesson is not found so the page can show a friendly 404.
  */
 export function getLessonById(id) {
-  return lessons.find(l => l.id === id) ?? lessons[1]
+  if (!id) return undefined
+  const resolvedId = lessonAliases[id] || id
+  return lessons.find(l => l.id === resolvedId)
 }
 
 export default lessons

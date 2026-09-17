@@ -46,6 +46,7 @@ const colorMap = {
 export default function Progress() {
   const { settings } = useAccessibility()
   const [quizScores, setQuizScores] = useState([])
+  const [loading, setLoading] = useState(true)
 
   // Load quiz scores from localStorage
   useEffect(() => {
@@ -61,6 +62,8 @@ export default function Progress() {
       }
     } catch (e) {
       console.error('Error loading quiz scores', e)
+    } finally {
+      setLoading(false)
     }
   }, [])
 
@@ -371,7 +374,12 @@ export default function Progress() {
           </Link>
         </div>
 
-        {quizScores.length === 0 ? (
+        {loading ? (
+          <div className="bg-white rounded-2xl border border-gray-200 p-8 flex items-center justify-center gap-3 text-sm font-semibold text-gray-500">
+            <div className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+            Loading quiz performance records...
+          </div>
+        ) : quizScores.length === 0 ? (
           /* Empty state */
           <div className="bg-white rounded-2xl border-2 border-dashed border-gray-200 p-8 sm:p-10 flex flex-col items-center text-center gap-4">
             <div className="w-16 h-16 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center">

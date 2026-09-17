@@ -37,12 +37,13 @@ export default function Navbar() {
         </NavLink>
 
         {/* Nav links */}
-        <nav className="flex items-center gap-6" aria-label="Main navigation">
+        <nav className="flex items-center gap-3 sm:gap-6" aria-label="Main navigation">
           {navLinks.map(({ to, label, Icon }) => (
             <NavLink
               key={to}
               to={to}
               end={to === '/'}
+              aria-label={label}
               className={({ isActive }) =>
                 `${baseClass} ${isActive ? activeClass : ''}`
               }

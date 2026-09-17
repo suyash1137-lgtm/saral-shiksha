@@ -23,6 +23,7 @@ import { useAccessibility } from '../../context/AccessibilityContext'
 import students from '../../data/students'
 import courses from '../../data/courses'
 import AccessibilityToolbar from '../../components/AccessibilityToolbar'
+import Toast from '../../components/Toast'
 
 const a11yBadgeMap = {
   readAloud: { label: 'Read Aloud', icon: Eye, color: 'bg-blue-100 text-blue-700 border-blue-200' },
@@ -78,6 +79,17 @@ export default function Students() {
     }
   }, [searchParams])
 
+  // Close modal on Escape key
+  useEffect(() => {
+    function handleKey(e) {
+      if (e.key === 'Escape' && selectedStudent) {
+        setSelectedStudent(null)
+      }
+    }
+    document.addEventListener('keydown', handleKey)
+    return () => document.removeEventListener('keydown', handleKey)
+  }, [selectedStudent])
+
   // Filter students
   const filteredStudents = students.filter((s) => {
     const matchesSearch =
@@ -111,15 +123,7 @@ export default function Students() {
   return (
     <div className="max-w-5xl mx-auto flex flex-col gap-8 pb-20">
       {/* Toast Notification */}
-      {interventionToast && (
-        <div
-          role="status"
-          className="fixed bottom-6 right-6 z-50 bg-purple-900 text-white px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 border border-purple-700 animate-bounce"
-        >
-          <CheckCircle size={20} className="text-emerald-400 flex-shrink-0" />
-          <span className="text-sm font-semibold">{interventionToast}</span>
-        </div>
-      )}
+      <Toast message={interventionToast} onClose={() => setInterventionToast('')} />
 
       {/* Top Breadcrumb */}
       <div className="flex items-center gap-1.5 text-sm text-gray-500">

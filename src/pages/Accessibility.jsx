@@ -6,6 +6,7 @@ import {
   Save, ArrowRight, RotateCcw,
 } from 'lucide-react'
 import { useAccessibility } from '../context/AccessibilityContext'
+import Toast from '../components/Toast'
 
 /**
  * Accessibility Profile — Phase 4
@@ -364,6 +365,13 @@ export default function AccessibilityProfile() {
           Reset to defaults
         </button>
       </div>
+
+      {saved && (
+        <Toast
+          message="Accessibility preferences saved and applied platform-wide!"
+          onClose={() => setSaved(false)}
+        />
+      )}
     </div>
   )
 }
