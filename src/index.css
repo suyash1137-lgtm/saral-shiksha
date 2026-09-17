@@ -2,16 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global accessibility overrides */
+/* ───────────────────────────────────────────────────────────────
+   Phase 6 — Global Accessibility Engine
+   These classes are toggled on <html> by AccessibilityContext.
+   They cascade through every component without any per-component
+   conditional logic required.
+─────────────────────────────────────────────────────────────── */
+
+/* ── Large Text ────────────────────────────────────────────────
+   Bumps the root font-size so all rem-based values scale up.
+   Tailwind text-* classes use rem, so this affects them globally.
+─────────────────────────────────────────────────────────────── */
 .large-text {
-  font-size: 1.125rem;
+  font-size: 1.125rem; /* 18px root — all rem sizes scale up ~12.5% */
 }
 
+/* For elements that explicitly set text-sm/text-xs, boost them too */
+.large-text h1 { font-size: 2.5rem; }
+.large-text h2 { font-size: 1.875rem; }
+.large-text h3 { font-size: 1.375rem; }
+.large-text p,
+.large-text li,
+.large-text label,
+.large-text span:not([class*="text-"]),
+.large-text button { font-size: 1rem; }
+
+
+/* ── High Contrast ─────────────────────────────────────────────
+   Increases contrast ratios site-wide via CSS filter.
+   Individual components can also use Tailwind high-contrast:
+   classes for finer control (supported natively in Tailwind v3.4+
+   via the `forced-colors` media query).
+─────────────────────────────────────────────────────────────── */
 .high-contrast {
   filter: contrast(1.5);
 }
 
-.reduced-motion * {
-  animation-duration: 0.001ms !important;
-  transition-duration: 0.001ms !important;
+
+/* ── Reduced Motion ────────────────────────────────────────────
+   Zero-out all animations and transitions.
+   This is separate from prefers-reduced-motion so it can be
+   toggled by the user explicitly, not just inferred from the OS.
+─────────────────────────────────────────────────────────────── */
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration:        0.001ms !important;
+  animation-iteration-count: 1       !important;
+  transition-duration:       0.001ms !important;
+  scroll-behavior:           auto    !important;
+}
+
+/* Progress bar fill transition — disabled with reduced motion */
+.reduced-motion [role="progressbar"] div {
+  transition: none !important;
+}
+
+/* Respect OS-level preference too */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:        0.001ms !important;
+    animation-iteration-count: 1       !important;
+    transition-duration:       0.001ms !important;
+  }
 }
