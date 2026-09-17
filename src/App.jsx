@@ -1,6 +1,7 @@
 // src/App.jsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AccessibilityProvider } from './context/AccessibilityContext'
+import { AuthProvider } from './context/AuthContext'
 import MainLayout from './layouts/MainLayout'
 
 // Student pages
@@ -23,32 +24,36 @@ import Students         from './pages/teacher/Students'
 
 export default function App() {
   return (
+    // AccessibilityProvider wraps everything so global CSS classes apply to <html>
     <AccessibilityProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<MainLayout />}>
-            {/* Student routes */}
-            <Route path="/"                    element={<Home />} />
-            <Route path="/login"               element={<Login />} />
-            <Route path="/signup"              element={<Signup />} />
-            <Route path="/accessibility"       element={<Accessibility />} />
-            <Route path="/dashboard"           element={<Dashboard />} />
-            <Route path="/courses"             element={<Courses />} />
-            <Route path="/lesson/:id"          element={<LessonDetail />} />
-            <Route path="/quiz/:id"            element={<QuizDetail />} />
-            <Route path="/progress"            element={<Progress />} />
+      {/* AuthProvider is nested inside so it can be consumed anywhere */}
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<MainLayout />}>
+              {/* Student routes */}
+              <Route path="/"                    element={<Home />} />
+              <Route path="/login"               element={<Login />} />
+              <Route path="/signup"              element={<Signup />} />
+              <Route path="/accessibility"       element={<Accessibility />} />
+              <Route path="/dashboard"           element={<Dashboard />} />
+              <Route path="/courses"             element={<Courses />} />
+              <Route path="/lesson/:id"          element={<LessonDetail />} />
+              <Route path="/quiz/:id"            element={<QuizDetail />} />
+              <Route path="/progress"            element={<Progress />} />
 
-            {/* Teacher routes */}
-            <Route path="/teacher/login"           element={<TeacherLogin />} />
-            <Route path="/teacher/dashboard"       element={<TeacherDashboard />} />
-            <Route path="/teacher/course/create"   element={<CreateCourse />} />
-            <Route path="/teacher/students"        element={<Students />} />
+              {/* Teacher routes */}
+              <Route path="/teacher/login"           element={<TeacherLogin />} />
+              <Route path="/teacher/dashboard"       element={<TeacherDashboard />} />
+              <Route path="/teacher/course/create"   element={<CreateCourse />} />
+              <Route path="/teacher/students"        element={<Students />} />
 
-            {/* 404 */}
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+              {/* 404 */}
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </AccessibilityProvider>
   )
 }
