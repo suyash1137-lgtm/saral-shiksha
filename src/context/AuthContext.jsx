@@ -15,7 +15,7 @@ import { createContext, useContext, useState } from 'react'
 const USERS_KEY = 'saralshiksha_users'   // registered accounts
 const SESSION_KEY = 'saralshiksha_user'  // current session
 
-// ─── pre-seeded demo user ────────────────────────────────────────
+// ─── pre-seeded demo users ────────────────────────────────────────
 const DEMO_USER = {
   id: 'demo-001',
   name: 'Demo Student',
@@ -24,6 +24,14 @@ const DEMO_USER = {
 }
 const DEMO_PASSWORD = 'demo1234'
 
+const DEMO_TEACHER = {
+  id: 'teacher-001',
+  name: 'Prof. Sharma',
+  email: 'teacher@saralshiksha.in',
+  role: 'teacher',
+}
+const DEMO_TEACHER_PASSWORD = 'teacher1234'
+
 function loadUsers() {
   try {
     const raw = localStorage.getItem(USERS_KEY)
@@ -31,11 +39,17 @@ function loadUsers() {
     // make sure demo user credentials always exist
     if (!arr.find(u => u.email === DEMO_USER.email)) {
       arr.push({ ...DEMO_USER, password: DEMO_PASSWORD })
-      localStorage.setItem(USERS_KEY, JSON.stringify(arr))
     }
+    if (!arr.find(u => u.email === DEMO_TEACHER.email)) {
+      arr.push({ ...DEMO_TEACHER, password: DEMO_TEACHER_PASSWORD })
+    }
+    localStorage.setItem(USERS_KEY, JSON.stringify(arr))
     return arr
   } catch {
-    return [{ ...DEMO_USER, password: DEMO_PASSWORD }]
+    return [
+      { ...DEMO_USER, password: DEMO_PASSWORD },
+      { ...DEMO_TEACHER, password: DEMO_TEACHER_PASSWORD }
+    ]
   }
 }
 
@@ -115,13 +129,48 @@ export function AuthProvider({ children }) {
     return { ok: true }
   }
 
+  /** loginAsDemoTeacher — one click, teacher portal */
+  function loginAsDemoTeacher() {
+    const session = { ...DEMO_TEACHER }
+    saveSession(session)
+    setUser(session)
+    return { ok: true }
+  }
+
+  /** loginTeacher — educator login */
+  function loginTeacher({ email, password }) {
+    const users = loadUsers()
+    const found = users.find(
+      u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+    )
+    if (found) {
+      const session = { id: found.id, name: found.name, email: found.email, role: 'teacher' }
+      saveSession(session)
+      setUser(session)
+      return { ok: true }
+    }
+    // For prototype simplicity, allow login if valid email provided
+    if (email && password) {
+      const session = {
+        id: `teacher-${Date.now()}`,
+        name: email.split('@')[0] || 'Teacher',
+        email,
+        role: 'teacher'
+      }
+      saveSession(session)
+      setUser(session)
+      return { ok: true }
+    }
+    return { ok: false, error: 'Please enter a valid email and password, or use the Demo Teacher button.' }
+  }
+
   function logout() {
     saveSession(null)
     setUser(null)
   }
 
   return (
-    <AuthContext.Provider value={{ user, signup, login, loginAsDemo, logout }}>
+    <AuthContext.Provider value={{ user, signup, login, loginAsDemo, loginAsDemoTeacher, loginTeacher, logout }}>
       {children}
     </AuthContext.Provider>
   )
