@@ -80,7 +80,7 @@ export default function TeacherDashboard() {
               settings.fontSize === 'large' ? 'text-3xl sm:text-4xl' : 'text-2xl sm:text-3xl'
             }`}
           >
-            Welcome, {user?.name || 'Prof. Sharma'} 👋
+            Welcome, {user?.name || 'Prof. Janhavi'} 👋
           </h1>
           <p className="text-gray-600 text-sm sm:text-base mt-1">
             Monitor student accessibility profiles, intervention alerts, and inclusive course design.

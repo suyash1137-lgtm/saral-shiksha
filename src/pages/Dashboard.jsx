@@ -78,52 +78,54 @@ function CourseCard({ course }) {
   const nextLesson = course.lessons.find(l => !l.completed) ?? course.lessons[0]
 
   return (
-    <div className={`bg-white rounded-2xl border ${c.ring} shadow-sm p-5 flex flex-col gap-4 hover:shadow-md transition-shadow`}>
-      {/* Header */}
-      <div className="flex items-start gap-3">
-        <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0 ${c.icon}`}>
-          {course.icon}
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-2">
-            <h3 className="font-bold text-gray-900 text-base leading-tight">{course.title}</h3>
-            <span className={`text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${levelColor[course.level] ?? 'bg-gray-100 text-gray-600'}`}>
-              {course.level}
-            </span>
+    <div className={`bg-white rounded-2xl border ${c.ring} shadow-sm p-5 flex flex-col h-full hover:shadow-md transition-shadow`}>
+      <div className="flex flex-col gap-4 flex-1">
+        {/* Header */}
+        <div className="flex items-start gap-3">
+          <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0 ${c.icon}`}>
+            {course.icon}
           </div>
-          <p className="text-xs text-gray-500 mt-0.5">{course.category} · {course.duration}</p>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-start justify-between gap-2">
+              <h3 className="font-bold text-gray-900 text-base leading-tight">{course.title}</h3>
+              <span className={`text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${levelColor[course.level] ?? 'bg-gray-100 text-gray-600'}`}>
+                {course.level}
+              </span>
+            </div>
+            <p className="text-xs text-gray-500 mt-0.5">{course.category} · {course.duration}</p>
+          </div>
+        </div>
+
+        {/* Progress bar */}
+        <div>
+          <div className="flex justify-between items-center text-xs text-gray-500 mb-1.5">
+            <span>{course.completedLessons} of {course.totalLessons} lessons</span>
+            <span className="font-semibold text-gray-700">{course.progress}%</span>
+          </div>
+          <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden" role="progressbar"
+            aria-valuenow={course.progress} aria-valuemin={0} aria-valuemax={100}
+            aria-label={`${course.title} progress: ${course.progress}%`}>
+            <div
+              className={`h-3 rounded-full transition-all duration-500 ${c.bar}`}
+              style={{ width: `${course.progress}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-1">
+          {course.tags.slice(0, 3).map(tag => (
+            <span key={tag} className={`text-xs px-2 py-0.5 rounded-md font-medium ${c.badge}`}>
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
 
-      {/* Progress bar */}
-      <div>
-        <div className="flex justify-between items-center text-xs text-gray-500 mb-1.5">
-          <span>{course.completedLessons} of {course.totalLessons} lessons</span>
-          <span className="font-semibold text-gray-700">{course.progress}%</span>
-        </div>
-        <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden" role="progressbar"
-          aria-valuenow={course.progress} aria-valuemin={0} aria-valuemax={100}
-          aria-label={`${course.title} progress: ${course.progress}%`}>
-          <div
-            className={`h-3 rounded-full transition-all duration-500 ${c.bar}`}
-            style={{ width: `${course.progress}%` }}
-          />
-        </div>
-      </div>
-
-      {/* Tags */}
-      <div className="flex flex-wrap gap-1">
-        {course.tags.slice(0, 3).map(tag => (
-          <span key={tag} className={`text-xs px-2 py-0.5 rounded-md font-medium ${c.badge}`}>
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      {/* CTA */}
+      {/* CTA pinned to bottom */}
       <Link
         to={`/lesson/${nextLesson.id}`}
-        className={`flex items-center justify-center gap-2 text-sm font-semibold text-white rounded-xl py-2.5
+        className={`mt-4 flex items-center justify-center gap-2 text-sm font-semibold text-white rounded-xl py-2.5
           transition-all active:scale-[0.98]
           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
           ${c.btn}`}
@@ -252,7 +254,7 @@ export default function Dashboard() {
             View all →
           </Link>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
           {courses.map(c => <CourseCard key={c.id} course={c} />)}
         </div>
       </section>

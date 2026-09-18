@@ -26,7 +26,7 @@ const DEMO_PASSWORD = 'demo1234'
 
 const DEMO_TEACHER = {
   id: 'teacher-001',
-  name: 'Prof. Sharma',
+  name: 'Prof. Janhavi',
   email: 'teacher@saralshiksha.in',
   role: 'teacher',
 }
@@ -40,7 +40,10 @@ function loadUsers() {
     if (!arr.find(u => u.email === DEMO_USER.email)) {
       arr.push({ ...DEMO_USER, password: DEMO_PASSWORD })
     }
-    if (!arr.find(u => u.email === DEMO_TEACHER.email)) {
+    const teacherIdx = arr.findIndex(u => u.email === DEMO_TEACHER.email)
+    if (teacherIdx >= 0) {
+      arr[teacherIdx] = { ...arr[teacherIdx], ...DEMO_TEACHER, password: DEMO_TEACHER_PASSWORD }
+    } else {
       arr.push({ ...DEMO_TEACHER, password: DEMO_TEACHER_PASSWORD })
     }
     localStorage.setItem(USERS_KEY, JSON.stringify(arr))
@@ -60,7 +63,14 @@ function saveUsers(users) {
 function loadSession() {
   try {
     const raw = localStorage.getItem(SESSION_KEY)
-    return raw ? JSON.parse(raw) : null
+    if (!raw) return null
+    const session = JSON.parse(raw)
+    if (session && session.email === DEMO_TEACHER.email) {
+      const updated = { ...session, name: DEMO_TEACHER.name }
+      localStorage.setItem(SESSION_KEY, JSON.stringify(updated))
+      return updated
+    }
+    return session
   } catch {
     return null
   }
