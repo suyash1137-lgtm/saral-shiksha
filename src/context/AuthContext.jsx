@@ -174,13 +174,34 @@ export function AuthProvider({ children }) {
     return { ok: false, error: 'Please enter a valid email and password, or use the Demo Teacher button.' }
   }
 
+  /**
+   * updateUser(updates)
+   * Updates fields like name or avatar on the active user,
+   * persisting immediately to session and registered user storage.
+   */
+  function updateUser(updates) {
+    setUser(prev => {
+      const updated = { ...(prev || {}), ...updates }
+      saveSession(updated)
+      const users = loadUsers()
+      const idx = users.findIndex(
+        u => (updated.id && u.id === updated.id) || (updated.email && u.email === updated.email)
+      )
+      if (idx >= 0) {
+        users[idx] = { ...users[idx], ...updates }
+        saveUsers(users)
+      }
+      return updated
+    })
+  }
+
   function logout() {
     saveSession(null)
     setUser(null)
   }
 
   return (
-    <AuthContext.Provider value={{ user, signup, login, loginAsDemo, loginAsDemoTeacher, loginTeacher, logout }}>
+    <AuthContext.Provider value={{ user, signup, login, loginAsDemo, loginAsDemoTeacher, loginTeacher, updateUser, logout }}>
       {children}
     </AuthContext.Provider>
   )

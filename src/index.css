@@ -14,9 +14,19 @@
     min-height: 100%;
   }
 
+  html.dark,
+  html.dark body {
+    background-color: #0d0c15;
+    color: #f3f4f6;
+  }
+
   #root {
     min-height: 100vh;
     background-color: #F5F0FF;
+  }
+
+  html.dark #root {
+    background-color: #0d0c15;
   }
 }
 

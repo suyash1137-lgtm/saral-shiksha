@@ -86,7 +86,7 @@ export default function AccessibilityToolbar({ className = '' }) {
   const activeCount = toggles.filter((t) => t.isActive).length
 
   return (
-    <div className={`bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden ${className}`}>
+    <div className={`bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden transition-colors ${className}`}>
       {/* Header / toggle button */}
       <button
         type="button"
@@ -94,23 +94,23 @@ export default function AccessibilityToolbar({ className = '' }) {
         aria-expanded={open}
         aria-controls="a11y-toolbar-content"
         className="w-full flex items-center justify-between gap-2 px-4 py-3
-          hover:bg-gray-50 transition-colors text-left
+          hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors text-left
           focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
       >
-        <div className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-          <Settings2 size={16} aria-hidden="true" className="text-indigo-600" />
+        <div className="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-200">
+          <Settings2 size={16} aria-hidden="true" className="text-indigo-600 dark:text-indigo-400" />
           Accessibility Quick Controls
         </div>
         <div className="flex items-center gap-2">
           {activeCount > 0 && (
-            <span className="text-xs font-bold bg-indigo-100 text-indigo-700 rounded-full px-2.5 py-0.5">
+            <span className="text-xs font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 rounded-full px-2.5 py-0.5">
               {activeCount} active
             </span>
           )}
           {open ? (
-            <ChevronUp size={15} className="text-gray-400" aria-hidden="true" />
+            <ChevronUp size={15} className="text-gray-400 dark:text-gray-500" aria-hidden="true" />
           ) : (
-            <ChevronDown size={15} className="text-gray-400" aria-hidden="true" />
+            <ChevronDown size={15} className="text-gray-400 dark:text-gray-500" aria-hidden="true" />
           )}
         </div>
       </button>
@@ -119,7 +119,7 @@ export default function AccessibilityToolbar({ className = '' }) {
       {open && (
         <div
           id="a11y-toolbar-content"
-          className="px-4 pb-4 pt-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 border-t border-gray-100"
+          className="px-4 pb-4 pt-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 border-t border-gray-100 dark:border-gray-800"
         >
           {toggles.map(({ key, label, Icon, isActive, onToggle, activeColor }) => (
             <button
@@ -134,7 +134,7 @@ export default function AccessibilityToolbar({ className = '' }) {
                 ${
                   isActive
                     ? activeColor
-                    : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100'
+                    : 'bg-gray-50 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700'
                 }`}
             >
               <Icon size={18} aria-hidden="true" />

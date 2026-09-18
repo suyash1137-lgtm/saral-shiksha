@@ -107,48 +107,48 @@ export default function QuizDetail() {
 
   return (
     <div className="max-w-3xl mx-auto flex flex-col gap-6 pb-20">
-      {/* Breadcrumb nav */}
-      <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-sm text-gray-500">
-        <Link to="/dashboard" className="hover:text-indigo-600 transition-colors">
+      {/* Breadcrumb navigation */}
+      <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+        <Link to="/dashboard" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
           Dashboard
         </Link>
         <ChevronRight size={14} aria-hidden="true" />
-        <Link to={`/lesson/${quiz.lessonId || 'lesson-002'}`} className="hover:text-indigo-600 transition-colors">
+        <Link to={`/lesson/${quiz.lessonId || 'lesson-002'}`} className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
           {quiz.courseTitle}
         </Link>
         <ChevronRight size={14} aria-hidden="true" />
-        <span className="text-gray-800 font-medium truncate">{quiz.title}</span>
+        <span className="text-gray-800 dark:text-gray-200 font-medium truncate">{quiz.title}</span>
       </nav>
 
       {/* Accessibility Toolbar */}
       <AccessibilityToolbar />
 
       {/* Quiz Header Card */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm p-6 transition-colors">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
-          <span className="inline-flex items-center gap-1.5 bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold px-3 py-1 rounded-full">
+          <span className="inline-flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-100 dark:border-indigo-900 text-indigo-700 dark:text-indigo-300 text-xs font-semibold px-3 py-1 rounded-full">
             <BookOpen size={14} />
             {quiz.courseTitle}
           </span>
-          <span className="text-xs font-medium text-gray-500">
+          <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
             {isCompleted ? 'Quiz Completed' : `Question ${currentIdx + 1} of ${totalQuestions}`}
           </span>
         </div>
 
         <h1
-          className={`font-extrabold text-gray-900 leading-tight ${
+          className={`font-extrabold text-gray-900 dark:text-gray-50 leading-tight ${
             settings.fontSize === 'large' ? 'text-3xl sm:text-4xl' : 'text-2xl sm:text-3xl'
           }`}
         >
           {quiz.title}
         </h1>
-        <p className="text-sm text-gray-600 mt-1">
+        <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
           Review your understanding of key concepts. Choose the option you think is best.
         </p>
 
         {/* Visual Progress Bar */}
         <div className="mt-5">
-          <div className="flex justify-between text-xs text-gray-500 mb-1 font-medium">
+          <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-1 font-medium">
             <span>Progress</span>
             <span>
               {isCompleted
@@ -157,7 +157,7 @@ export default function QuizDetail() {
             </span>
           </div>
           <div
-            className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden"
+            className="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2.5 overflow-hidden"
             role="progressbar"
             aria-valuenow={
               isCompleted
@@ -189,17 +189,17 @@ export default function QuizDetail() {
 
       {!isCompleted ? (
         /* Question Card */
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8 flex flex-col gap-6">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm p-6 sm:p-8 flex flex-col gap-6 transition-colors">
           {/* Question Text & Read Aloud */}
           <div className="flex flex-col gap-3">
             <div className="flex items-start justify-between gap-4">
               <h2
                 id={`question-${currentQ.id}`}
-                className={`font-bold text-gray-900 leading-snug ${
+                className={`font-bold text-gray-900 dark:text-gray-50 leading-snug ${
                   settings.fontSize === 'large' ? 'text-xl sm:text-2xl' : 'text-lg sm:text-xl'
                 }`}
               >
-                <span className="text-indigo-600 mr-2">Q{currentIdx + 1}.</span>
+                <span className="text-indigo-600 dark:text-indigo-400 mr-2">Q{currentIdx + 1}.</span>
                 {currentQ.question}
               </h2>
             </div>
@@ -224,32 +224,32 @@ export default function QuizDetail() {
               const isSelected = selectedOptionIdx === idx
               const isCorrectOption = currentQ.correctAnswer === idx
 
-              let borderClass = 'border-gray-200 hover:border-indigo-400 hover:bg-indigo-50/40'
-              let badgeBg = 'bg-gray-100 text-gray-700 border-gray-300'
+              let borderClass = 'border-gray-200 dark:border-gray-700 hover:border-indigo-400 hover:bg-indigo-50/40 dark:hover:bg-indigo-950/30'
+              let badgeBg = 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'
               let stateIcon = null
               let stateLabel = null
 
               if (hasSelectedCurrent) {
                 if (isCorrectOption) {
-                  borderClass = 'border-emerald-500 bg-emerald-50/70 ring-2 ring-emerald-300'
+                  borderClass = 'border-emerald-500 bg-emerald-50/70 dark:bg-emerald-950/40 ring-2 ring-emerald-300 dark:ring-emerald-700'
                   badgeBg = 'bg-emerald-600 text-white border-emerald-600'
-                  stateIcon = <CheckCircle size={22} className="text-emerald-600 flex-shrink-0" />
+                  stateIcon = <CheckCircle size={22} className="text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                   stateLabel = (
-                    <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider bg-emerald-100 px-2 py-0.5 rounded">
+                    <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 uppercase tracking-wider bg-emerald-100 dark:bg-emerald-900/60 px-2.5 py-0.5 rounded">
                       Correct Answer
                     </span>
                   )
                 } else if (isSelected) {
-                  borderClass = 'border-rose-400 bg-rose-50/70 ring-2 ring-rose-200'
+                  borderClass = 'border-rose-400 bg-rose-50/70 dark:bg-rose-950/40 ring-2 ring-rose-200 dark:ring-rose-800'
                   badgeBg = 'bg-rose-600 text-white border-rose-600'
-                  stateIcon = <XCircle size={22} className="text-rose-600 flex-shrink-0" />
+                  stateIcon = <XCircle size={22} className="text-rose-600 dark:text-rose-400 flex-shrink-0" />
                   stateLabel = (
-                    <span className="text-xs font-bold text-rose-800 uppercase tracking-wider bg-rose-100 px-2 py-0.5 rounded">
+                    <span className="text-xs font-bold text-rose-800 dark:text-rose-300 uppercase tracking-wider bg-rose-100 dark:bg-rose-900/60 px-2.5 py-0.5 rounded">
                       Your Choice (Incorrect)
                     </span>
                   )
                 } else {
-                  borderClass = 'border-gray-200 opacity-60 bg-gray-50'
+                  borderClass = 'border-gray-200 dark:border-gray-800 opacity-60 bg-gray-50 dark:bg-gray-800/40'
                 }
               }
 
@@ -275,7 +275,7 @@ export default function QuizDetail() {
                   {/* Option text */}
                   <div className="flex-1 pt-1">
                     <p
-                      className={`font-semibold text-gray-800 ${
+                      className={`font-semibold text-gray-800 dark:text-gray-100 ${
                         settings.fontSize === 'large' ? 'text-lg' : 'text-base'
                       }`}
                     >
@@ -296,23 +296,23 @@ export default function QuizDetail() {
             <div
               className={`rounded-2xl p-5 border-2 flex flex-col gap-3 transition-all ${
                 isCurrentCorrect
-                  ? 'bg-emerald-50 border-emerald-300'
-                  : 'bg-amber-50 border-amber-300'
+                  ? 'bg-emerald-50 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-800'
+                  : 'bg-amber-50 dark:bg-amber-950/30 border-amber-300 dark:border-amber-800'
               }`}
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   {isCurrentCorrect ? (
                     <>
-                      <CheckCircle size={22} className="text-emerald-600" aria-hidden="true" />
-                      <span className="font-extrabold text-emerald-900 text-base">
+                      <CheckCircle size={22} className="text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+                      <span className="font-extrabold text-emerald-900 dark:text-emerald-200 text-base">
                         Correct! Well done!
                       </span>
                     </>
                   ) : (
                     <>
-                      <HelpCircle size={22} className="text-amber-700" aria-hidden="true" />
-                      <span className="font-extrabold text-amber-900 text-base">
+                      <HelpCircle size={22} className="text-amber-700 dark:text-amber-400" aria-hidden="true" />
+                      <span className="font-extrabold text-amber-900 dark:text-amber-200 text-base">
                         Not quite — here is the explanation:
                       </span>
                     </>
@@ -325,7 +325,7 @@ export default function QuizDetail() {
               </div>
 
               <p
-                className={`text-gray-800 leading-relaxed ${
+                className={`text-gray-800 dark:text-gray-200 leading-relaxed ${
                   settings.fontSize === 'large' ? 'text-base' : 'text-sm'
                 }`}
               >
@@ -359,48 +359,48 @@ export default function QuizDetail() {
         </div>
       ) : (
         /* Results / Final Score Screen */
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 flex flex-col items-center text-center gap-6">
-          <div className="w-20 h-20 rounded-full bg-amber-100 border-4 border-amber-300 flex items-center justify-center text-amber-700 shadow-sm">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm p-8 flex flex-col items-center text-center gap-6 transition-colors">
+          <div className="w-20 h-20 rounded-full bg-amber-100 dark:bg-amber-950/60 border-4 border-amber-300 dark:border-amber-700 flex items-center justify-center text-amber-700 dark:text-amber-300 shadow-sm">
             <Award size={40} aria-hidden="true" />
           </div>
 
           <div className="flex flex-col gap-2 max-w-md">
-            <span className="text-xs font-bold uppercase tracking-widest text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/80 px-3 py-1 rounded-full mx-auto">
               Quiz Completed
             </span>
             <h2
-              className={`font-extrabold text-gray-900 ${
+              className={`font-extrabold text-gray-900 dark:text-gray-50 ${
                 settings.fontSize === 'large' ? 'text-3xl sm:text-4xl' : 'text-2xl sm:text-3xl'
               }`}
             >
               {percentage >= 70 ? 'Great job!' : 'Good effort!'}
             </h2>
-            <p className="text-gray-600 text-base">
-              You got <strong className="text-gray-900 font-bold">{correctCount}</strong> of{' '}
-              <strong className="text-gray-900 font-bold">{totalQuestions}</strong> questions
+            <p className="text-gray-600 dark:text-gray-300 text-base">
+              You got <strong className="text-gray-900 dark:text-gray-100 font-bold">{correctCount}</strong> of{' '}
+              <strong className="text-gray-900 dark:text-gray-100 font-bold">{totalQuestions}</strong> questions
               correct ({percentage}%).
             </p>
           </div>
 
           {/* Score breakdown card */}
-          <div className="w-full max-w-md bg-gray-50 border border-gray-200 rounded-2xl p-5 flex items-center justify-around">
+          <div className="w-full max-w-md bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-2xl p-5 flex items-center justify-around">
             <div className="flex flex-col items-center">
-              <span className="text-2xl font-black text-emerald-600">{correctCount}</span>
-              <span className="text-xs font-semibold text-gray-500 uppercase mt-0.5">Correct</span>
+              <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400">{correctCount}</span>
+              <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mt-0.5">Correct</span>
             </div>
-            <div className="w-px h-10 bg-gray-200" />
+            <div className="w-px h-10 bg-gray-200 dark:bg-gray-700" />
             <div className="flex flex-col items-center">
-              <span className="text-2xl font-black text-rose-500">{totalQuestions - correctCount}</span>
-              <span className="text-xs font-semibold text-gray-500 uppercase mt-0.5">Incorrect</span>
+              <span className="text-2xl font-black text-rose-500 dark:text-rose-400">{totalQuestions - correctCount}</span>
+              <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mt-0.5">Incorrect</span>
             </div>
-            <div className="w-px h-10 bg-gray-200" />
+            <div className="w-px h-10 bg-gray-200 dark:bg-gray-700" />
             <div className="flex flex-col items-center">
-              <span className="text-2xl font-black text-indigo-600">{percentage}%</span>
-              <span className="text-xs font-semibold text-gray-500 uppercase mt-0.5">Score</span>
+              <span className="text-2xl font-black text-indigo-600 dark:text-indigo-400">{percentage}%</span>
+              <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mt-0.5">Score</span>
             </div>
           </div>
 
-          <div className="text-xs text-gray-500 bg-indigo-50/80 border border-indigo-100 rounded-xl px-4 py-2.5 max-w-md">
+          <div className="text-xs text-gray-500 dark:text-gray-400 bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900 rounded-xl px-4 py-2.5 max-w-md">
             ✓ Your quiz score has been automatically saved to your progress profile.
           </div>
 
@@ -409,7 +409,7 @@ export default function QuizDetail() {
             <button
               type="button"
               onClick={handleRetake}
-              className="inline-flex items-center gap-2 border-2 border-gray-300 hover:border-gray-400 bg-white text-gray-700 font-semibold px-6 py-3 rounded-xl hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-600"
+              className="inline-flex items-center gap-2 border-2 border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-semibold px-6 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700/60 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-600"
             >
               <RotateCcw size={16} aria-hidden="true" />
               Retake Quiz

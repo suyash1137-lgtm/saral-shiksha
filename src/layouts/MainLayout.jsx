@@ -12,7 +12,7 @@ export default function MainLayout() {
   const isHome = pathname === '/'
 
   return (
-    <div className="min-h-screen bg-[#F5F0FF] flex flex-col">
+    <div className="min-h-screen bg-[#F5F0FF] dark:bg-[#0d0c15] text-gray-900 dark:text-gray-100 flex flex-col transition-colors duration-200">
       <Navbar />
       <main className={`flex-1 ${isHome ? '' : 'container mx-auto px-4 py-8'}`}>
         <Outlet />

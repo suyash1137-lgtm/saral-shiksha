@@ -49,20 +49,20 @@ function CodeBlock({ code, caption, language }) {
 // ─── key point item ───────────────────────────────────────────────
 function KeyPoint({ text }) {
   return (
-    <li className="flex items-start gap-3 bg-indigo-50/80 border border-indigo-100 rounded-xl px-4 py-3">
-      <CheckCircle size={18} className="text-indigo-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
-      <span className="text-sm text-gray-800 leading-relaxed font-medium">{text}</span>
+    <li className="flex items-start gap-3 bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/60 rounded-xl px-4 py-3">
+      <CheckCircle size={18} className="text-indigo-600 dark:text-indigo-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
+      <span className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed font-medium">{text}</span>
     </li>
   )
 }
 
 // ─── section wrapper ──────────────────────────────────────────────
-function LessonSection({ icon: Icon, title, iconColor = 'text-indigo-600', children }) {
+function LessonSection({ icon: Icon, title, iconColor = 'text-indigo-600 dark:text-indigo-400', children }) {
   return (
     <section className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
         <Icon size={18} className={`flex-shrink-0 ${iconColor}`} aria-hidden="true" />
-        <h2 className="font-bold text-gray-900 text-base">{title}</h2>
+        <h2 className="font-bold text-gray-900 dark:text-gray-50 text-base">{title}</h2>
       </div>
       {children}
     </section>
@@ -132,16 +132,16 @@ export default function LessonDetail() {
     <>
       <div className="max-w-3xl mx-auto flex flex-col gap-7 pb-24">
         {/* Breadcrumb nav */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-sm text-gray-500">
-          <Link to="/dashboard" className="hover:text-indigo-600 transition-colors">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+          <Link to="/dashboard" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
             Dashboard
           </Link>
           <ChevronRight size={14} aria-hidden="true" />
-          <Link to="/courses" className="hover:text-indigo-600 transition-colors">
+          <Link to="/courses" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
             {lesson.courseTitle}
           </Link>
           <ChevronRight size={14} aria-hidden="true" />
-          <span className="text-gray-800 font-medium truncate">{lesson.title}</span>
+          <span className="text-gray-800 dark:text-gray-200 font-medium truncate">{lesson.title}</span>
         </nav>
 
         {/* Accessibility Toolbar */}
@@ -150,8 +150,8 @@ export default function LessonDetail() {
         {/* Lesson header */}
         <header className="flex flex-col gap-3">
           {/* Course + lesson meta */}
-          <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
-            <span className="bg-indigo-100 text-indigo-700 font-semibold px-2.5 py-0.5 rounded-full">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+            <span className="bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 font-semibold px-2.5 py-0.5 rounded-full">
               {lesson.courseTitle}
             </span>
             <span>
@@ -162,7 +162,7 @@ export default function LessonDetail() {
               {lesson.duration}
             </span>
             {lesson.completed && (
-              <span className="flex items-center gap-1 text-emerald-600 font-medium">
+              <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
                 <CheckCircle size={12} aria-hidden="true" />
                 Completed
               </span>
@@ -171,7 +171,7 @@ export default function LessonDetail() {
 
           {/* Title */}
           <h1
-            className={`font-extrabold text-gray-900 leading-tight ${
+            className={`font-extrabold text-gray-900 dark:text-gray-50 leading-tight ${
               settings.fontSize === 'large' ? 'text-3xl sm:text-4xl' : 'text-2xl sm:text-3xl'
             }`}
           >
@@ -180,7 +180,7 @@ export default function LessonDetail() {
 
           {/* Intro */}
           <p
-            className={`text-gray-600 leading-relaxed ${
+            className={`text-gray-600 dark:text-gray-300 leading-relaxed ${
               settings.fontSize === 'large' ? 'text-lg' : 'text-base'
             }`}
           >
@@ -190,7 +190,7 @@ export default function LessonDetail() {
           {/* Read aloud for full lesson */}
           <div className="flex items-center gap-2 flex-wrap pt-1">
             <ReadAloudButton text={fullNarration} label="Read entire lesson aloud" autoPlay />
-            <span className="text-xs text-gray-400">
+            <span className="text-xs text-gray-400 dark:text-gray-500">
               {settings.readAloud
                 ? 'Auto-reading active (Read Aloud enabled)'
                 : 'Click to hear this full lesson read aloud'}
@@ -206,7 +206,7 @@ export default function LessonDetail() {
             onToggle={() => setLocalSimple(!isSimpleMode)}
             normalContent={
               <p
-                className={`text-gray-700 leading-relaxed bg-white border border-gray-100 rounded-2xl px-5 py-4 shadow-sm ${
+                className={`text-gray-700 dark:text-gray-200 leading-relaxed bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl px-5 py-4 shadow-sm ${
                   settings.fontSize === 'large' ? 'text-lg' : 'text-base'
                 }`}
               >
@@ -215,17 +215,17 @@ export default function LessonDetail() {
             }
             simpleContent={
               <div
-                className={`bg-purple-50/80 border-2 border-purple-200 rounded-2xl px-5 py-4 flex flex-col gap-2 shadow-sm ${
+                className={`bg-purple-50/80 dark:bg-purple-950/40 border-2 border-purple-200 dark:border-purple-800 rounded-2xl px-5 py-4 flex flex-col gap-2 shadow-sm ${
                   settings.fontSize === 'large' ? 'text-lg' : 'text-base'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-purple-700 uppercase tracking-wider bg-purple-100 px-2.5 py-0.5 rounded">
+                  <span className="text-xs font-bold text-purple-700 dark:text-purple-300 uppercase tracking-wider bg-purple-100 dark:bg-purple-900/60 px-2.5 py-0.5 rounded">
                     Simple Language Mode Active
                   </span>
-                  <span className="text-xs text-purple-600 font-medium">Adapted for Cognitive Clarity</span>
+                  <span className="text-xs text-purple-600 dark:text-purple-300 font-medium">Adapted for Cognitive Clarity</span>
                 </div>
-                <p className="text-gray-900 font-medium leading-relaxed">{lesson.simpleExplanation}</p>
+                <p className="text-gray-900 dark:text-gray-100 font-medium leading-relaxed">{lesson.simpleExplanation}</p>
               </div>
             }
           />
@@ -262,13 +262,13 @@ export default function LessonDetail() {
         />
 
         {/* Quiz CTA */}
-        <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+        <div className="bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/20 border-2 border-amber-200 dark:border-amber-800/80 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
           <div className="flex-1">
-            <p className="text-xs font-bold text-amber-800 uppercase tracking-widest mb-1">
+            <p className="text-xs font-bold text-amber-800 dark:text-amber-300 uppercase tracking-widest mb-1">
               Ready to verify what you learned?
             </p>
-            <h3 className="font-extrabold text-gray-900 text-lg">Take the Lesson Quiz</h3>
-            <p className="text-sm text-gray-600 mt-0.5">
+            <h3 className="font-extrabold text-gray-900 dark:text-gray-50 text-lg">Take the Lesson Quiz</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300 mt-0.5">
               {lesson.courseTitle} · Practice concepts & record your score to your profile.
             </p>
           </div>
@@ -282,11 +282,11 @@ export default function LessonDetail() {
         </div>
 
         {/* Lesson navigation */}
-        <div className="flex items-center justify-between gap-4 pt-4 border-t border-gray-100">
+        <div className="flex items-center justify-between gap-4 pt-4 border-t border-gray-100 dark:border-gray-800">
           {lesson.prevLessonId ? (
             <Link
               to={`/lesson/${lesson.prevLessonId}`}
-              className="flex items-center gap-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
+              className="flex items-center gap-2 text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
             >
               <ArrowLeft size={15} aria-hidden="true" />
               Previous Lesson
@@ -294,7 +294,7 @@ export default function LessonDetail() {
           ) : (
             <Link
               to="/courses"
-              className="flex items-center gap-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
+              className="flex items-center gap-2 text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
             >
               <ArrowLeft size={15} aria-hidden="true" />
               Back to Courses
